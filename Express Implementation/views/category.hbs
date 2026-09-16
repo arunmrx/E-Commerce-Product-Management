@@ -1,0 +1,71 @@
+<div class="page-heading">
+
+    <span class="badge">
+        Category
+    </span>
+
+    <h1>
+        {{category}}
+    </h1>
+
+    <p>
+        Products available in this category.
+    </p>
+
+</div>
+
+
+<div class="product-grid">
+
+    {{#each products}}
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                🛍️
+            </div>
+
+            <div class="product-content">
+
+                <span class="category">
+                    {{category}}
+                </span>
+
+                <h3>
+                    {{name}}
+                </h3>
+
+                <p class="price">
+                    ₹{{price}}
+                </p>
+
+
+                {{#if available}}
+
+                    <p class="available">
+                        ● In Stock
+                    </p>
+
+                {{else}}
+
+                    <p class="out">
+                        ● Out of Stock
+                    </p>
+
+                {{/if}}
+
+
+                <a class="small-button"
+                   href="/products/{{id}}">
+
+                    View Details
+
+                </a>
+
+            </div>
+
+        </div>
+
+    {{/each}}
+
+</div>  

@@ -1,0 +1,65 @@
+<div class="details-card">
+
+    <div class="details-icon">
+        🛍️
+    </div>
+
+
+    <div>
+
+        <span class="category">
+            {{product.category}}
+        </span>
+
+        <h1>
+            {{product.name}}
+        </h1>
+
+        <p class="big-price">
+            ₹{{product.price}}
+        </p>
+
+
+        <p>
+            <strong>
+                Product ID:
+            </strong>
+
+            {{product.id}}
+        </p>
+
+
+        <p>
+            <strong>
+                Category:
+            </strong>
+
+            {{product.category}}
+        </p>
+
+
+        {{#if product.available}}
+
+            <p class="available">
+                ● Product Available
+            </p>
+
+        {{else}}
+
+            <p class="out">
+                ● Currently Out of Stock
+            </p>
+
+        {{/if}}
+
+
+        <a class="button"
+           href="/products">
+
+            ← Back to Products
+
+        </a>
+
+    </div>
+
+</div> 
