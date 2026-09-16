@@ -1,14 +1,14 @@
 # E-Commerce Product Management
 
-### Node.js – HTTP, Express.js, Routing & Handlebars (Case Study 2)
+Node.js – HTTP, Express.js, Routing & Handlebars (Case Study 2)
 
-This project implements the **E-Commerce Product Management** case study **twice**, as two completely separate, standalone applications:
+This project implements the E-Commerce Product Management case study twice, as two completely separate and standalone applications.
 
-```text
+Project Structure:
+
 E-Commerce Product Management/
 
-│
-├── HTTP Implementation/          (Node.js core "http" module, no Express/Handlebars)
+├── HTTP Implementation/
 │   ├── server.js
 │   ├── views.js
 │   ├── data.js
@@ -17,7 +17,7 @@ E-Commerce Product Management/
 │       └── css/
 │           └── style.css
 │
-└── Express Implementation/       (Express.js + Handlebars)
+└── Express Implementation/
     ├── server.js
     ├── data.js
     ├── package.json
@@ -28,154 +28,145 @@ E-Commerce Product Management/
     │   ├── home.hbs
     │   ├── products.hbs
     │   ├── product.hbs
-    │   └── category.hbs
+    │   ├── category.hbs
+    │   └── 404.hbs
     └── public/
         └── css/
             └── style.css
 
-Both applications implement the same e-commerce functionality so that the Node.js HTTP module and Express.js implementation can be compared directly.
 
-Routes
-Route	Description
-GET /	Home page
-GET /products	Display all products
-GET /products/:id	Display details of a selected product
-GET /category/:name	Display products belonging to a category
+ROUTES
 
-Examples:
+GET /                         - Home page
+GET /products                 - Display all products
+GET /products/:id             - Display selected product details
+GET /category/:name           - Display products by category
 
-/
- /products
- /products/1
- /products/5
- /category/Electronics
- /category/Shoes
- /category/Clothing
+Any invalid route returns HTTP 404 Not Found.
 
-Any invalid or unknown route returns HTTP 404 Not Found.
 
-If a valid route is requested using an unsupported HTTP method, the application can return HTTP 405 Method Not Allowed where method handling is implemented.
+IMPLEMENTATION A – NODE.JS HTTP MODULE
 
-Implementation A – Node.js http Module
+The first application is developed using the built-in Node.js HTTP module.
 
-The first application is built using Node.js's built-in http module.
+Express.js and Handlebars are not used in this implementation.
 
-It does not use Express.js or Handlebars.
+How to run:
 
-Running the application
 cd "HTTP Implementation"
 node server.js
 
-Then open:
+Open the following URL in the browser:
 
 http://localhost:3000/
-What it demonstrates
-Manual routing using Node.js's built-in http module.
-Manual URL parsing using the request URL.
-Dynamic route parameters such as /products/:id.
-Category-based dynamic routing using /category/:name.
-Manual HTTP response handling using:
-res.writeHead()
-res.end()
-Explicit HTTP status codes:
-200 – Successful request
-404 – Product/category/route not found
-HTML pages are generated manually using JavaScript template literals in views.js.
-Product information is stored in data.js.
-Product lists are generated using JavaScript loops such as forEach().
-Product availability is handled using JavaScript conditions.
-CSS files are served manually using Node.js file-system functionality.
-No Express.js or Handlebars is used in this implementation.
-Example Dynamic Route
-GET /products/1
 
-The application extracts the product ID from the URL, searches for the matching product in the dataset, and displays its details.
 
-For example:
+WHAT IT DEMONSTRATES
 
-/products/1
+1. Manual routing using the Node.js HTTP module.
+2. Manual URL parsing.
+3. Static routes such as / and /products.
+4. Dynamic routes such as /products/:id.
+5. Dynamic category routes such as /category/:name.
+6. Manual request and response handling.
+7. HTTP status codes such as 200 and 404.
+8. HTML generation using JavaScript template literals.
+9. Product data management using data.js.
+10. CSS file serving using Node.js.
+11. Custom 404 error page.
+12. No Express.js or Handlebars is used.
 
-displays the details of the product with ID 1.
 
-Implementation B – Express.js + Handlebars
+IMPLEMENTATION B – EXPRESS.JS + HANDLEBARS
 
-The second application uses Express.js for routing and Handlebars (hbs) for dynamic HTML rendering.
+The second application is developed using Express.js and Handlebars.
 
-Running the application
+How to run:
+
 cd "Express Implementation"
 npm install
 npm start
 
-Then open:
+Open the following URL in the browser:
 
 http://localhost:3001/
-What it demonstrates
-Express.js routing using methods such as:
-app.get('/', ...)
-app.get('/products', ...)
-app.get('/products/:id', ...)
-app.get('/category/:name', ...)
-Dynamic route parameters using:
-req.params.id
-req.params.name
-Handlebars as the template engine:
-app.set('view engine', 'hbs');
-Separate .hbs files for different pages.
-Reusable Handlebars partials:
-header.hbs
-footer.hbs
-Dynamic product rendering from server-side data.
-{{#each}} loops for displaying multiple products.
-{{#if}} conditional blocks for product availability.
-Category filtering using route parameters.
-express.static() for serving CSS files.
-Custom 404 page for invalid routes.
-Dynamic data passed from the Express server to Handlebars templates.
-Example Handlebars Loop
+
+
+WHAT IT DEMONSTRATES
+
+1. Express.js routing.
+2. Static and dynamic routes.
+3. Route parameters using req.params.
+4. Handlebars as the template engine.
+5. Dynamic data rendering.
+6. Handlebars partials for header and footer.
+7. {{#each}} loop for displaying multiple products.
+8. {{#if}} and {{else}} for product availability.
+9. express.static() for serving CSS files.
+10. Custom 404 error page.
+11. Separate template files for different pages.
+12. Dynamic category filtering.
+
+
+HANDLEBARS FEATURES USED
+
+The Express implementation uses Handlebars to dynamically generate the web pages.
+
+Each Loop:
+
 {{#each products}}
-    <h2>{{name}}</h2>
-    <p>₹{{price}}</p>
+    {{name}}
+    {{price}}
 {{/each}}
 
-This allows multiple products to be displayed dynamically without manually writing HTML for every product.
+The {{#each}} helper is used to display multiple products dynamically.
 
-Conditional Rendering
-
-Product availability is displayed using a Handlebars conditional:
+Conditional Rendering:
 
 {{#if available}}
-    <span>In Stock</span>
+    In Stock
 {{else}}
-    <span>Out of Stock</span>
+    Out of Stock
 {{/if}}
 
-This demonstrates conditional/helper functionality required by the assignment.
+The {{#if}} helper is used to display the availability status of each product.
 
-Sample Product Data
 
-Both implementations use an e-commerce product dataset stored in data.js.
+SAMPLE PRODUCT DATA
 
-The dataset contains 12 products from different categories.
+Both implementations use the same product dataset stored in data.js.
 
-Electronics
-iPhone 15
-Samsung Galaxy S24
-HP Pavilion Laptop
-Sony WH-1000XM5 Headphones
-Apple AirPods Pro
-Shoes
-Nike Air Max
-Adidas Running Shoes
-Clothing
-Levi's Jeans
-Puma T-Shirt
-Accessories
-Casio G-Shock Watch
-Ray-Ban Sunglasses
-Bags
-American Tourister Backpack
+The project contains 12 products from different categories.
 
-Each product contains information such as:
+Electronics:
+
+1. iPhone 15
+2. Samsung Galaxy S24
+3. HP Pavilion Laptop
+4. Sony WH-1000XM5 Headphones
+5. Apple AirPods Pro
+
+Shoes:
+
+6. Nike Air Max
+7. Adidas Running Shoes
+
+Clothing:
+
+8. Levi's Jeans
+9. Puma T-Shirt
+
+Accessories:
+
+10. Casio G-Shock Watch
+11. Ray-Ban Sunglasses
+
+Bags:
+
+12. American Tourister Backpack
+
+
+Each product contains:
 
 ID
 Product Name
@@ -183,50 +174,146 @@ Category
 Price
 Availability
 
-For example:
 
-Product ID: 1
-Name: iPhone 15
-Category: Electronics
-Price: ₹69,999
-Availability: In Stock
-Error Handling
+EXAMPLE DYNAMIC ROUTES
 
-Both implementations include error handling for invalid routes and unavailable products.
+Product details:
 
-Example
+/products/1
+
+This displays the details of product ID 1.
+
+Another example:
+
+/products/5
+
+This displays the details of product ID 5.
+
+Category example:
+
+/category/Electronics
+
+This displays all products belonging to the Electronics category.
+
+Other examples:
+
+/category/Shoes
+/category/Clothing
+/category/Accessories
+
+
+ERROR HANDLING
+
+Both implementations include a custom 404 error page.
+
+Example:
+
 /products/999
 
-If product ID 999 does not exist, the application displays a custom 404 Not Found page.
+If product ID 999 does not exist, the application returns a 404 Product Not Found page.
 
-Similarly:
+Another example:
 
 /category/Unknown
 
-returns a 404 response when the requested category does not exist.
+If the category does not exist, the application returns a 404 Category Not Found page.
 
-Comparison: HTTP Module vs Express.js
-Aspect	Node.js http Module – Implementation A	Express.js – Implementation B
-Routing	Routing is handled manually by checking URLs and using conditions/string matching.	Routing is handled using Express methods such as app.get() and route parameters.
-Route Parameters	Parameters such as product ID must be extracted manually from the URL.	Parameters are automatically available through req.params.
-Code Complexity	More code is required because routing, responses and HTML generation are handled manually.	Less boilerplate because Express provides routing and response helpers.
-View Rendering	HTML is generated manually using JavaScript template literals.	HTML is separated into .hbs Handlebars template files.
-Dynamic Data	Data is inserted manually into HTML strings.	Server-side data can be passed directly to Handlebars templates.
-Loops	JavaScript loops such as forEach() are used to generate product cards.	Handlebars {{#each}} is used to display product lists.
-Conditions	JavaScript if/else conditions are used.	Handlebars {{#if}} and {{else}} are used.
-Maintainability	As the application grows, manually managing routes and HTML can become more difficult.	Separate routes, views and static files make the application easier to organize.
-Scalability	Additional features require more manual implementation using Node.js modules.	Express provides middleware and an ecosystem that can be used when the application grows.
-Dependencies	Uses Node.js built-in modules and does not require Express or Handlebars.	Requires Express.js and Handlebars (hbs).
-Learning Purpose	Useful for understanding how Node.js handles HTTP requests and responses internally.	Useful for building structured web applications with simpler routing and template rendering.
-In Short
+Any unknown URL also returns a 404 Page Not Found response.
 
-The Node.js http module provides low-level control over HTTP requests and responses. In Implementation A, routing, URL parameter handling, status codes, CSS serving and HTML generation are handled manually.
 
-Express.js provides a higher-level framework that simplifies routing, request/response handling and middleware management. Combined with Handlebars, it also allows HTML views to be separated from the server-side routing code.
+COMPARISON – HTTP MODULE VS EXPRESS.JS
 
-Therefore, the two implementations demonstrate the same E-Commerce Product Management functionality using two different approaches:
+Routing:
 
-Implementation A
+Node.js HTTP Module:
+Routing is handled manually by checking the request URL and HTTP method.
+
+Express.js:
+Routing is handled using Express methods such as app.get() and route parameters.
+
+Code Complexity:
+
+Node.js HTTP Module:
+More code is required because URL parsing, routing and response handling are done manually.
+
+Express.js:
+Less boilerplate code is required because Express provides built-in routing and response methods.
+
+Route Parameters:
+
+Node.js HTTP Module:
+Route parameters must be extracted manually from the URL.
+
+Express.js:
+Route parameters are automatically available through req.params.
+
+View Rendering:
+
+Node.js HTTP Module:
+HTML pages are generated manually using JavaScript template literals.
+
+Express.js:
+HTML pages are created using separate Handlebars template files.
+
+Dynamic Data:
+
+Node.js HTTP Module:
+Product data is manually inserted into generated HTML.
+
+Express.js:
+Product data is passed directly from the server to Handlebars templates.
+
+Loops:
+
+Node.js HTTP Module:
+JavaScript loops such as forEach() are used.
+
+Express.js:
+The Handlebars {{#each}} helper is used.
+
+Conditions:
+
+Node.js HTTP Module:
+JavaScript if/else conditions are used.
+
+Express.js:
+Handlebars {{#if}} and {{else}} helpers are used.
+
+Maintainability:
+
+Node.js HTTP Module:
+As the number of routes and features increases, manually managing the application can become more difficult.
+
+Express.js:
+Routes, templates and static files are separated, making the application easier to maintain.
+
+Scalability:
+
+Node.js HTTP Module:
+Additional features require more manual implementation.
+
+Express.js:
+Express provides middleware and an ecosystem that can be used to add more features as the application grows.
+
+Dependencies:
+
+Node.js HTTP Module:
+Uses built-in Node.js modules and does not require Express or Handlebars.
+
+Express.js:
+Requires Express.js and Handlebars.
+
+
+CONCLUSION
+
+The Node.js HTTP module provides low-level control over HTTP requests and responses. In Implementation A, routing, URL parameter handling, status codes, CSS serving and HTML generation are handled manually.
+
+Express.js provides a higher-level framework that simplifies routing and request/response handling. Handlebars allows HTML templates to be separated from the server-side application logic.
+
+This project demonstrates the same E-Commerce Product Management system using two different approaches:
+
+Implementation A:
+
 Node.js HTTP Module
         ↓
 Manual Routing
@@ -236,22 +323,14 @@ Manual HTML Generation
 HTTP Response
 
 
-Implementation B
+Implementation B:
+
 Express.js
         ↓
 Express Routing
         ↓
 Handlebars Templates
         ↓
-Dynamic Rendering
+Dynamic Data Rendering
         ↓
 HTTP Response
-
-This project demonstrates the practical difference between using the built-in Node.js HTTP module and using Express.js with Handlebars for developing a web-based E-Commerce Product Management system.
-
-
-### Bhai ek important baat
-
-Tere friend ke README mein **Online Food Delivery** ke hisaab se `POST /order`, order data, etc. hai. Tere **E-Commerce Product Management** assignment mein woh cheezein nahi hain, isliye maine unko copy nahi kiya. Maine README ko **tere actual project ke routes, 12 products, HTTP implementation aur Express + HBS requirements** ke according rakha hai.
-
-**GitHub mein bas `README.md` ke andar ye pura content paste kar de.**
